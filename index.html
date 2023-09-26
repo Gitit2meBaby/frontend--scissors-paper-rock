@@ -29,36 +29,71 @@
 
     <section class="app">
       <div class="border paper">
-        <div class="circle" id="paper">
+        <div class="circle choices" id="paper" data-choice="paper">
           <img src="images/icon-paper.svg" alt="hand symbol for paper">
         </div>
       </div>
 
       <div class="border scissors">
-        <div class="circle" id="scissors">
+        <div class="circle choices" id="scissors" data-choice="scissors">
           <img src="images/icon-scissors.svg" alt="hand symbol for scissors">
         </div>
       </div>
 
       <div class="border rock">
-        <div class="circle" id="rock">
+        <div class="circle choices" id="rock" data-choice="rock">
           <img src="images/icon-rock.svg" alt="hand symbol for rock">
         </div>
       </div>
     </section>
   </div>
 
+  <!-- Results section -->
+  <section class="result hidden">
+    <div class="choice your-choice">
+      <p>YOU PICKED</p>
+      <!-- <div class="border scissors upsize upsize-border">
+        <div class="circle upsize">
+          <img class="upsize" src="images/icon-scissors.svg" alt="hand symbol for scissors">
+        </div> -->
+    </div>
+    </div>
+
+    <div class="hidden result-display">
+      <h2>YOU LOSE</h2>
+      <button id="playAgain">PLAY AGAIN</button>
+    </div>
+
+    <div class="choice computer-choice">
+      <p>THE HOUSE PICKED</p>
+
+      <div class="blank-div">
+        <div class="blank-circle"></div>
+      </div>
+
+      <div class="hidden border rock upsize upsize-border">
+        <div class="circle upsize">
+          <img class="upsize" src="images/icon-rock.svg" alt="hand symbol for rock">
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- winner circles -->
+  <!-- <div class="winner you-won">
+    <div class="winner-mid you-won-mid">
+      <div class="winner-inner you-won-in"></div>
+    </div>
+  </div> -->
+  <!-- rules btn -->
+
   <div class="rules">
     <button id="rules">RULES</button>
   </div>
 
+
+
 </body>
 
 </html>
-<!-- You Picked
-The House Picked
-
-You Win
-You Lose
-
-Play Again -->

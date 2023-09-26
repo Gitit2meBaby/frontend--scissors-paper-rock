@@ -23,12 +23,14 @@
 body {
     margin: 0;
     background: var(--Radial-Gradient);
+    max-height: 100vh;
+    overflow: hidden;
+    position: relative;
 }
 
 .container {
     margin: auto;
     width: 700px;
-    height: 100dvh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -44,6 +46,7 @@ header {
     border-radius: 1rem;
     width: 100%;
     padding: 1.2rem 1.5rem;
+    z-index: 5;
 }
 
 .title {
@@ -56,6 +59,7 @@ header h1 {
     color: white;
     font-size: 2.8rem;
     line-height: 2.4rem;
+    text-shadow: 0 0 2px 2px rgba(0, 0, 0, .5);
     margin: 0;
 }
 
@@ -85,7 +89,25 @@ header h1 {
     margin: 0;
 }
 
-/* GAME CONTAINER */
+/* RULES BTN */
+.rules {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 5;
+}
+
+.rules button {
+    color: rgba(255, 255, 255, 0.841);
+    letter-spacing: .1rem;
+    border: 1px solid rgba(255, 255, 255, 0.625);
+    border-radius: .3rem;
+    background-color: transparent;
+    padding: .5rem 2rem;
+}
+
+
+/* GAME START CONTAINER */
 .app {
     background: url(images/bg-triangle.svg);
     background-repeat: no-repeat;
@@ -95,6 +117,8 @@ header h1 {
     gap: 2.5rem;
 }
 
+
+/* CIRCLES */
 .border {
     display: flex;
     align-items: center;
@@ -102,6 +126,7 @@ header h1 {
     border-radius: 50%;
     width: 200px;
     height: 200px;
+    z-index: 5;
 }
 
 .circle {
@@ -112,8 +137,9 @@ header h1 {
     border-radius: 50%;
     width: 160px;
     height: 160px;
-    z-index: 5;
+    z-index: 10;
     border-top: 8px solid hsla(217, 15%, 50%, 0.22);
+    cursor: pointer;
 }
 
 .circle img {
@@ -137,4 +163,121 @@ header h1 {
     background: var(--Scissors-Gradient);
     border-bottom: 8px solid rgb(199, 119, 21);
     margin-left: 0.75rem;
+}
+
+/* CHOOSING WINNER SECTION */
+.result {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8rem;
+    padding-top: 2.5rem;
+}
+
+.blank-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 270px;
+    width: 270px;
+    border-bottom: 8px solid transparent;
+}
+
+.blank-circle {
+    background-color: rgba(0, 0, 0, 0.221);
+    border-radius: 50%;
+    height: 250px;
+    width: 250px;
+}
+
+.choice {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4rem
+}
+
+.choice p {
+    color: white;
+    font-size: 1.8rem;
+    letter-spacing: .2rem;
+    text-shadow: 0 0 2px 2px rgba(0, 0, 0, .5);
+}
+
+.upsize {
+    transform: scale(1.25);
+}
+
+.upsize-border {
+    width: 270px;
+    height: 270px
+}
+
+/* RESULT SCREEN */
+.result-display {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.2rem;
+    margin-bottom: -7rem;
+}
+
+.result-display h2 {
+    color: white;
+    font-size: 4rem;
+    text-shadow: 0 0 2px 2px rgba(0, 0, 0, .5);
+    margin: 0;
+    z-index: 5;
+}
+
+.result-display button {
+    background-color: white;
+    border: none;
+    border-radius: .3rem;
+    color: rgb(254, 34, 34);
+    font-size: 1.2rem;
+    letter-spacing: .1rem;
+    padding: 1rem;
+    box-shadow: 0 0 5px 5px rgba(0, 0, 0, .2);
+    z-index: 5;
+}
+
+/* WINNER CIRCLES */
+/* .winner-inner {
+    height: 400px;
+    width: 400px;
+    border-radius: 50%;
+    background-color: #2B3858;
+    z-index: 3;
+} */
+
+/* .winner-mid {
+    height: 600px;
+    width: 600px;
+    border-radius: 50%;
+    background-color: #263554;
+    opacity: .2;
+    z-index: 2;
+} */
+
+/* .winner {
+    height: 800px;
+    width: 800px;
+    border-radius: 50%;
+    background-color: #213251;
+    opacity: .1;
+    z-index: 1;
+} */
+
+.you-won-in {
+    position: absolute;
+    left: 2rem;
+    bottom: 2rem;
+}
+
+
+
+.hidden {
+    display: none;
 }
