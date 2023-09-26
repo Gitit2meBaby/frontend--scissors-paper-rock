@@ -1,10 +1,19 @@
 const gameDisplay = document.querySelector('.app')
+const rulesModal = document.querySelector('#rulesModal')
+const rulesBtn = document.querySelector('#rules')
+const closeBtn = document.querySelector('#closeBtn')
+
 const resultWaitDisplay = document.querySelector('.result');
 const finalResultDisplay = document.querySelector('.result-display')
 const resultText = document.querySelector('#resultText')
+
 const playAgainBtn = document.querySelector('#playAgain')
 const yourChoice = document.querySelector('.your-choice')
+const blankCircle = document.querySelector('.blank-div');
+// const nextBlankCircle = document.querySelector('.has-played')
+
 const computerChoiceDisplay = document.querySelector('.computer-choice');
+const scoreDisplay = document.querySelector('#score')
 
 let userChoiceData;
 let computerChoiceData;
@@ -36,10 +45,10 @@ choices.forEach((choice) => {
 })
 
 // passing the choice to a new div and changing screens
-function appendChoice(data) {
+function appendChoice(data, title) {
     const userChoice = document.createElement('div');
     userChoice.classList.add('choice')
-    userChoice.innerHTML = yourChoiceTemplate(data)
+    userChoice.innerHTML = yourChoiceTemplate(data, title)
     yourChoice.appendChild(userChoice);
 
     gameDisplay.classList.add('hidden')
@@ -65,25 +74,21 @@ function randomChoice() {
     const makeWait = () => {
         const computerChoice = document.createElement('div');
         computerChoice.classList.add('choice')
-        computerChoice.innerHTML = yourChoiceTemplate(data);
+        computerChoice.innerHTML = yourChoiceTemplate(data, title);
 
 
         computerChoiceDisplay.appendChild(computerChoice);
-
-        const blankCircle = document.querySelector('.blank-div');
-        blankCircle.classList.add('hidden');
+        const allBlankCircles = document.querySelectorAll('.blank-div');
+        allBlankCircles.forEach(blankCircle => {
+            blankCircle.classList.add('hidden');
+        });
 
         computerChoiceData = data
         compareChoices()
     };
-
     setTimeout(makeWait, 1000);
-    setTimeout(showResult, 1500)
+    setTimeout(showResult, 1800)
 }
-
-console.log(userChoiceData)
-console.log(computerChoiceData)
-
 
 // This could probably be done with a switch statement...
 function compareChoices() {
@@ -123,21 +128,56 @@ function draw() {
 
 function showResult() {
     finalResultDisplay.classList.remove('hidden')
-    console.log(userChoiceData, computerChoiceData)
-    // updateCounter()
+    scoreDisplay.textContent = counter
 }
-
-//play again
-playAgainBtn.addEventListener('click', () => {
-    finalResultDisplay.classList.add('hidden')
-    resultWaitDisplay.classList.add('hidden')
-    gameDisplay.classList.remove('hidden')
+function clearChoices() {
+    // Clear user's choice divs
     while (yourChoice.firstChild) {
         yourChoice.removeChild(yourChoice.firstChild);
     }
 
-    // Remove all children from computerChoiceDisplay
-    while (computerChoiceDisplay.firstChild) {
-        computerChoiceDisplay.removeChild(computerChoiceDisplay.firstChild);
+    // Clear computer's choice divs
+    while (computerChoiceDisplay.childNodes.length > 1) {
+        computerChoiceDisplay.removeChild(computerChoiceDisplay.lastChild);
     }
+}
+playAgainBtn.addEventListener('click', () => {
+    finalResultDisplay.classList.add('hidden');
+    resultWaitDisplay.classList.add('hidden');
+    gameDisplay.classList.remove('hidden');
+
+    // Clear the user's and computer's choices
+    computerChoiceDisplay.innerHTML = '';
+    yourChoice.innerHTML = '';
+
+    // Reset user and computer choice data to null
+    userChoiceData = null;
+    computerChoiceData = null;
+
+    // Show the computer's choice display
+    computerChoiceDisplay.appendChild(blankCircle);
+
+    // Create a new blankCircle div for the next round and append it to the computerChoiceDisplay
+    const nextBlankCircle = document.createElement('div');
+    nextBlankCircle.classList.add('blank-div');
+    nextBlankCircle.innerHTML = `
+        <div class="blank-circle"></div>
+    `;
+    computerChoiceDisplay.appendChild(nextBlankCircle);
+
+    // Reset the computerChoiceData to null for the new round
+    computerChoiceData = null;
+});
+
+
+
+// rules modal
+rulesBtn.addEventListener('click', () => {
+    rulesModal.classList.remove('hidden')
 })
+
+closeBtn.addEventListener('click', () => {
+    rulesModal.classList.add('hidden')
+
+})
+
