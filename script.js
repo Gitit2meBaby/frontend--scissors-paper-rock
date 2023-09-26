@@ -1,24 +1,18 @@
 const gameDisplay = document.querySelector('.app')
-const rulesModal = document.querySelector('#rulesModal')
-const rulesBtn = document.querySelector('#rules')
-const closeBtn = document.querySelector('#closeBtn')
+const computerChoiceDisplay = document.querySelector('.computer-choice');
+const scoreDisplay = document.querySelector('#score')
 
 const resultWaitDisplay = document.querySelector('.result');
 const finalResultDisplay = document.querySelector('.result-display')
 const resultText = document.querySelector('#resultText')
 
-const playAgainBtn = document.querySelector('#playAgain')
 const yourChoice = document.querySelector('.your-choice')
 const blankCircle = document.querySelector('.blank-div');
-// const nextBlankCircle = document.querySelector('.has-played')
 
-const computerChoiceDisplay = document.querySelector('.computer-choice');
-const scoreDisplay = document.querySelector('#score')
 
 let userChoiceData;
 let computerChoiceData;
 let counter = 0
-
 
 // template for choice made
 const yourChoiceTemplate = (data, title) => `
@@ -53,10 +47,7 @@ function appendChoice(data, title) {
 
     gameDisplay.classList.add('hidden')
     resultWaitDisplay.classList.remove('hidden')
-    console.log(data)
-    return data
 }
-
 
 // making a random computer choice
 let choiceArray = ['rock', 'paper', 'scissors']
@@ -70,12 +61,11 @@ function randomChoice() {
     let data = computerChoiceValue
     let title = 'THE HOUSE PICKED'
 
-
+    // making a variable to allow for a pause for result reveal
     const makeWait = () => {
         const computerChoice = document.createElement('div');
         computerChoice.classList.add('choice')
         computerChoice.innerHTML = yourChoiceTemplate(data, title);
-
 
         computerChoiceDisplay.appendChild(computerChoice);
         const allBlankCircles = document.querySelectorAll('.blank-div');
@@ -90,7 +80,7 @@ function randomChoice() {
     setTimeout(showResult, 1800)
 }
 
-// This could probably be done with a switch statement...
+// This could probably be done with a switch statement... Or atleast something that would be less verbose.
 function compareChoices() {
     if (userChoiceData == 'rock' && computerChoiceData == 'rock') {
         draw()
@@ -113,6 +103,7 @@ function compareChoices() {
     }
 }
 
+// functions to deal with choices
 function win() {
     resultText.textContent = 'YOU WIN'
     counter++
@@ -125,59 +116,55 @@ function draw() {
     resultText.textContent = 'DRAW'
 }
 
-
 function showResult() {
     finalResultDisplay.classList.remove('hidden')
     scoreDisplay.textContent = counter
 }
+
+// cleaning the slate of appended divs for next game
 function clearChoices() {
-    // Clear user's choice divs
     while (yourChoice.firstChild) {
         yourChoice.removeChild(yourChoice.firstChild);
     }
 
-    // Clear computer's choice divs
     while (computerChoiceDisplay.childNodes.length > 1) {
         computerChoiceDisplay.removeChild(computerChoiceDisplay.lastChild);
     }
 }
+
+// restarting a new game
+const playAgainBtn = document.querySelector('#playAgain')
 playAgainBtn.addEventListener('click', () => {
     finalResultDisplay.classList.add('hidden');
     resultWaitDisplay.classList.add('hidden');
     gameDisplay.classList.remove('hidden');
 
-    // Clear the user's and computer's choices
     computerChoiceDisplay.innerHTML = '';
     yourChoice.innerHTML = '';
 
-    // Reset user and computer choice data to null
-    userChoiceData = null;
-    computerChoiceData = null;
-
-    // Show the computer's choice display
     computerChoiceDisplay.appendChild(blankCircle);
 
-    // Create a new blankCircle div for the next round and append it to the computerChoiceDisplay
+    // Create a new blankCircle div for the next round (this whole part of the code is pretty cooked... there is definately a better way to tackle this problem...)
     const nextBlankCircle = document.createElement('div');
     nextBlankCircle.classList.add('blank-div');
     nextBlankCircle.innerHTML = `
         <div class="blank-circle"></div>
     `;
     computerChoiceDisplay.appendChild(nextBlankCircle);
-
-    // Reset the computerChoiceData to null for the new round
-    computerChoiceData = null;
 });
 
-
-
 // rules modal
+const rulesModal = document.querySelector('#rulesModal')
+const rulesBtn = document.querySelector('#rules')
 rulesBtn.addEventListener('click', () => {
     rulesModal.classList.remove('hidden')
 })
 
-closeBtn.addEventListener('click', () => {
-    rulesModal.classList.add('hidden')
+const closeBtn = document.querySelectorAll('.closeBtn')
+closeBtn.forEach((btn) => {
+    btn.addEventListener('click', () => {
+        rulesModal.classList.add('hidden')
+    })
 
 })
 
